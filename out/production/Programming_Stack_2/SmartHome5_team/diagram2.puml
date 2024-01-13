@@ -1,0 +1,90 @@
+@startuml
+
+interface Device {
+  +execute()
+}
+
+interface Controller {
+  +updateData(device: Device)
+}
+
+interface Command {
+  +execute()
+}
+
+class CommandData {
+  +getBrightness()
+  +getTemperature()
+  +getHumidity()
+  -dataChanged()
+}
+
+interface Subject {
+  +registerObserver()
+  +deleteObserver()
+  +notifyObserver()
+}
+
+class Display {
+  +display()
+}
+
+Subject <|.. CommandData
+Device <|.. Light
+Device <|.. Heater
+Device <|.. Humidifier
+
+class SignalProcessing {
+  +setOnCommand(cmd: Command)
+  +setOffCommand(cmd: Command)
+  +getData()
+  +setBrightness(brightness: float)
+  +setTemperature(temperature: float)
+  +setHumidity(humidity: float)
+}
+
+class Light {
+  +lightSwitched()
+  +setBrightness(brightness: float)
+}
+
+class Heater {
+  +setTemperature(temperature: float)
+}
+
+class Humidifier {
+  +setHumidity(humidity: float)
+}
+
+interface GetCommand {
+  +getCommand()
+  +saveData()
+}
+
+class BrightnessCommand {
+  +lightOn()
+  +lightOff()
+  +saveSettings()
+}
+
+class TemperatureCommand {
+  +saveSettings()
+}
+
+class HumidityCommand {
+  +saveSettings()
+}
+
+Command <|.. BrightnessCommand
+Command <|.. TemperatureCommand
+Command <|.. HumidityCommand
+
+Display -left-> Controller
+Display -right-> SignalProcessing
+SignalProcessing -down-> CommandData
+
+GetCommand <|.. BrightnessCommand
+GetCommand <|.. TemperatureCommand
+GetCommand <|.. HumidityCommand
+
+@enduml

@@ -1,0 +1,93 @@
+@startuml
+class Sensor {
+  +readValue(): float
+}
+
+class LightSensor {
+  +readValue(): float
+}
+
+class TemperatureSensor {
+  +readValue(): float
+}
+
+class HumiditySensor {
+  +readValue(): float
+}
+
+interface Command {
+  +execute()
+}
+
+class Display {
+  -onCommand: Command
+  -offCommand: Command
+  -brightnessCommand: Command
+  -temperatureCommand: Command
+  -humidityCommand: Command
+  +setOnCommand(cmd: Command)
+  +setOffCommand(cmd: Command)
+  +setBrightnessCommand(cmd: Command)
+  +setTemperatureCommand(cmd: Command)
+  +setHumidityCommand(cmd: Command)
+  +onButtonPressed()
+  +offButtonPressed()
+  +brightnessButtonPressed()
+  +temperatureButtonPressed()
+  +humidityButtonPressed()
+}
+
+class LightOnCommand {
+  -light: Light
+  +execute()
+}
+
+class LightOffCommand {
+  -light: Light
+  +execute()
+}
+
+class BrightnessCommand {
+  -light: Light
+  +execute()
+}
+
+class TemperatureCommand {
+  -heater: Heater
+  +execute()
+}
+
+class HumidityCommand {
+  -humidifier: Humidifier
+  +execute()
+}
+
+class Light {
+  +on()
+  +off()
+  +setBrightness(brightness: float)
+}
+
+class Heater {
+  +setTemperature(temperature: float)
+}
+
+class Humidifier {
+  +setHumidity(humidity: float)
+}
+
+Sensor <|-- LightSensor
+Sensor <|-- TemperatureSensor
+Sensor <|-- HumiditySensor
+
+Display *-- Command
+Display o-- Light
+Display o-- Heater
+Display o-- Humidifier
+
+Command <|.. LightOnCommand
+Command <|.. LightOffCommand
+Command <|.. BrightnessCommand
+Command <|.. TemperatureCommand
+Command <|.. HumidityCommand
+@enduml

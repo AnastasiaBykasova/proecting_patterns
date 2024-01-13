@@ -1,0 +1,81 @@
+@startuml
+' Определяем интерфейсы для аудио и видео источников
+interface AudioSource {
+  + playAudio()
+}
+
+interface VideoSource {
+  + playVideo()
+}
+
+' Интерфейс для контроля освещения
+interface LightControl {
+  + dimLights(level: int)
+  + turnLightsOn()
+  + turnLightsOff()
+}
+
+' Интерфейс для источника ресурсов
+interface ResourceSource {
+  + readData()
+}
+
+' Реализуем классы для конкретных устройств
+class StreamingDevice implements VideoSource, AudioSource {
+  + playAudio()
+  + playVideo()
+  + streamContent(contentId: String)
+}
+
+class BluRayPlayer implements VideoSource, AudioSource {
+  + playAudio()
+  + playVideo()
+  + insertDisk(diskId: String)
+}
+
+class LightSystem implements LightControl {
+  + dimLights(level: int)
+  + turnLightsOn()
+  + turnLightsOff()
+}
+
+' Реализуем классы управляющие HomeTheater
+class RemoteControl {
+  + controlOperation()
+}
+
+class ComputerControl {
+  + controlOperation()
+}
+
+' Singleton класс HomeTheaterFacade включает в себя все интерфейсы и устройства
+class HomeTheaterFacade {
+  - audioSource: AudioSource
+  - videoSource: VideoSource
+  - lightControl: LightControl
+  - resourceSource: ResourceSource
+  + watchMovie(movieName: String)
+  + listenToMusic(musicId: String)
+  + endActivity()
+}
+
+' Конкретные источники ресурсов
+class DiskDrive implements ResourceSource {
+  + readData()
+}
+
+class InternetService implements ResourceSource {
+  + readData()
+}
+
+' Подключаем все компоненты к HomeTheaterFacade
+HomeTheaterFacade -right- AudioSource
+HomeTheaterFacade -left- VideoSource
+HomeTheaterFacade -up- LightControl
+HomeTheaterFacade -down- ResourceSource
+
+' Управление с использованием пульта и компьютера
+RemoteControl -right-> HomeTheaterFacade : Uses >
+ComputerControl -left-> HomeTheaterFacade : Uses >
+
+@enduml

@@ -1,0 +1,87 @@
+@startuml
+
+interface State {
+    +insertCoin(): void
+    +ejectCoin(): void
+    +turnCrank(): void
+    +dispense(): void
+    +refill(count: int): void
+}
+
+class GumballMachine {
+    -soldOutState: State
+    -noCoinState: State
+    -hasCoinState: State
+    -soldState: State
+    -winnerState: State
+    -toyState: State
+    -state: State
+    -count: int
+    -randomWinner: Random
+    +GumballMachine(numberGumballs: int)
+    +insertCoin(): void
+    +ejectCoin(): void
+    +turnCrank(): void
+    +setState(state: State): void
+    +releaseBall(): void
+    +getCount(): int
+    +refill(count: int): void
+    +getState(): State
+    +getSoldOutState(): State
+    +getNoCoinState(): State
+    +getHasCoinState(): State
+    +getSoldState(): State
+    +getWinnerState(): State
+    +getToyState(): State
+    +toString(): String
+}
+
+class SoldOutState {
+    -gumballMachine: GumballMachine
+    +SoldOutState(gumballMachine: GumballMachine)
+}
+
+class NoCoinState {
+    -gumballMachine: GumballMachine
+    +NoCoinState(gumballMachine: GumballMachine)
+}
+
+class HasCoinState {
+    -gumballMachine: GumballMachine
+    +HasCoinStack(gumballMachine: GumballMachine)
+}
+
+class SoldState {
+    -gumballMachine: GumballMachine
+    +SoldState(gumballMachine: GumballMachine)
+}
+
+class WinnerState {
+    -gumballMachine: GumballMachine
+    +WinnerState(gumballMachine: GumballMachine)
+}
+
+class ToyState {
+    -gumballMachine: GumballMachine
+    +ToyState(gumballMachine: GumballMachine)
+}
+
+class Main {
+}
+
+State <|.. SoldOutState
+State <|.. NoCoinState
+State <|.. HasCoinState
+State <|.. SoldState
+State <|.. WinnerState
+State <|.. ToyState
+
+GumballMachine *-right-> State : has >
+GumballMachine -right-> SoldOutState
+GumballMachine -right-> NoCoinState
+GumballMachine -right-> HasCoinState
+GumballMachine -right-> SoldState
+GumballMachine -right-> WinnerState
+GumballMachine -right-> ToyState
+
+@enduml

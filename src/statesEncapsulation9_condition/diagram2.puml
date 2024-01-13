@@ -1,0 +1,15 @@
+@startuml
+
+[*] --> NoCoinState : Инициализация [count > 0]
+NoCoinState --> HasCoinState : insertCoin()
+HasCoinState --> NoCoinState : ejectCoin()
+HasCoinState --> SoldState : turnCrank()
+SoldState --> NoCoinState : dispense() [count > 0]
+SoldState --> SoldOutState : dispense() [count == 0]
+SoldOutState --> NoCoinState : refill(count)
+HasCoinState --> WinnerState : turnCrank() [winner]
+WinnerState --> NoCoinState : dispense()
+NoCoinState --> ToyState : insertToyPromotionCoin()
+ToyState --> NoCoinState : dispense()
+
+@enduml

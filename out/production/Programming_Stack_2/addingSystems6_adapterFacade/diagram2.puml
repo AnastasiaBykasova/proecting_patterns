@@ -1,0 +1,18 @@
+@startuml
+actor User
+participant RemoteControl
+participant HomeTheaterFacade
+participant BluRayPlayer
+participant Screen
+participant Projector
+participant Amplifier
+participant SmartLightAdapter
+
+User -> RemoteControl: Выбрать фильм
+RemoteControl -> HomeTheaterFacade: watchMovie(movieName)
+HomeTheaterFacade -> BluRayPlayer: playVideo()
+HomeTheaterFacade -> Screen: down()
+HomeTheaterFacade -> Projector: on()
+HomeTheaterFacade -> Amplifier: setVolume(30)
+HomeTheaterFacade -> SmartLightAdapter: dimLights(10)
+@enduml

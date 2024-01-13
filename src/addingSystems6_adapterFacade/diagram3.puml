@@ -1,0 +1,14 @@
+@startuml
+actor User
+participant RemoteControl
+participant HomeTheaterFacade
+participant StreamingDevice
+participant Amplifier
+participant SmartLightAdapter
+
+User -> RemoteControl: Выбрать музыку
+RemoteControl -> HomeTheaterFacade: listenToMusic(musicId)
+HomeTheaterFacade -> StreamingDevice: playAudio()
+HomeTheaterFacade -> Amplifier: setVolume(20)
+HomeTheaterFacade -> SmartLightAdapter: setColor("Soft")
+@enduml

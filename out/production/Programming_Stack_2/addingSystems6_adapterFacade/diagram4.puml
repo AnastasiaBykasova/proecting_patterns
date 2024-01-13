@@ -1,0 +1,14 @@
+@startuml
+actor User
+participant RemoteControl
+participant HomeTheaterFacade
+participant SmartLightAdapter
+
+User -> RemoteControl: Выбрать сценарий освещения
+RemoteControl -> HomeTheaterFacade: setLightingScenario(scenarioName)
+alt Movie Night
+    HomeTheaterFacade -> SmartLightAdapter: dimLights(10)
+else Party
+    HomeTheaterFacade -> SmartLightAdapter: setColor("Vibrant")
+end
+@enduml
