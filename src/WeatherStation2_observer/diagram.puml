@@ -1,0 +1,15 @@
+@startuml
+interface Subject {
+    + registerObserver(Observer o)
+    + removeObserver(Observer o)
+    + notifyObservers()
+}
+interface Observer {
+    + update(float temperature, float humidity, float pressure)
+}
+Subject <|-- WeatherData
+Observer <|.. CurrentConditionsDisplay
+Observer <|.. ForecastDisplay
+Observer <|.. StatisticsDisplay
+WeatherData -* Observer
+@enduml
